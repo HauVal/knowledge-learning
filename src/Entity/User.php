@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,7 +11,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,9 +29,6 @@ class User
 
     #[ORM\Column]
     private ?bool $isActive = false;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $createdAt = null;
 
     /**
      * @var Collection<int, Purchase>
@@ -83,7 +82,7 @@ class User
         return $this->roles;
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 
@@ -102,16 +101,14 @@ class User
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getUserIdentifier(): string
     {
-        return $this->createdAt;
+        return $this->email;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    public function eraseCredentials(): void
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        // Si tu stockes des données sensibles, efface-les ici.
     }
 
     /**
