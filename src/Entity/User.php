@@ -23,7 +23,7 @@ class User
     private ?string $password = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ["ROLE_USER"];
 
     #[ORM\Column]
     private ?bool $isActive = false;
