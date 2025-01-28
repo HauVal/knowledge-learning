@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
 
             // Générer un lien de confirmation
             $confirmationUrl = $this->generateUrl('app_confirm_email', [
-                'token' => base64_encode($user->getEmail()), // Simplicité pour l'exemple
+                'token' => base64_encode($user->getEmail()),
             ], true);
 
             // Envoyer un email de confirmation
@@ -52,13 +52,12 @@ class RegistrationController extends AbstractController
                 ->from('no-reply@knowledge-learning.com')
                 ->to($user->getEmail())
                 ->subject('Confirmation de votre inscription')
-                ->html("<p>Merci de vous inscrire. Cliquez sur le lien suivant pour activer votre compte :</p>
-                        <a href='{$confirmationUrl}'>Confirmer mon compte</a>");
+                ->html("<p>Bienvenue sur Knowledge-learning. Pour activer votre compte, cliquez sur le lien :</p>
+                        <a href='http://127.0.0.1:8000{$confirmationUrl}'>Confirmer mon compte</a>");
 
             $mailer->send($email);
 
-            $this->addFlash('success', 'Un email de confirmation vous a été envoyé.');
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_email_sent');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -82,5 +81,12 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Votre compte a été activé avec succès.');
         return $this->redirectToRoute('app_login'); // Rediriger vers la connexion
     }
+
+    #[Route('/email-sent', name: 'app_email_sent')]
+    public function emailSent(): Response
+    {
+        return $this->render('registration/email_sent.html.twig');
+    }
+    
 }
 
