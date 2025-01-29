@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ lesson.name }}{% endblock %}
+
+{% block body %}
+    <h1>{{ lesson.name }}</h1>
+    <p>Prix : {{ lesson.price }}€</p>
+
+    <a href="{{ path('app_theme_show', { id: lesson.cursus.theme.id }) }}">Retour au thème</a>
+{% endblock %}

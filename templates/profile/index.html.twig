@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Bonjour, {{ app.user.name }} !</h1>
+        <p>Voici les formations disponibles :</p>
+
+        <ul class="list-group">
+            {% for theme in themes %}
+                <li class="list-group-item">
+                    <a href="{{ path('app_theme_show', { id: theme.id }) }}">
+                        {{ theme.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

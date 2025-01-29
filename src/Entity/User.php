@@ -45,10 +45,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Certification::class, mappedBy: 'user')]
     private Collection $certifications;
 
+    /**
+     * @var Collection<int, Cursus>
+     */
+    #[ORM\ManyToMany(targetEntity: Cursus::class)]
+    #[ORM\JoinTable(name: "user_cursus_purchase")]
+    private Collection $purchasedCursuses;
+
+    /**
+     * @var Collection<int, Lesson>
+     */
+    #[ORM\ManyToMany(targetEntity: Lesson::class)]
+    #[ORM\JoinTable(name: "user_lesson_purchase")]
+    private Collection $purchasedLessons;
+
     public function __construct()
     {
         $this->purchases = new ArrayCollection();
         $this->certifications = new ArrayCollection();
+        $this->purchasedCursuses = new ArrayCollection();
+        $this->purchasedLessons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +199,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
 
+        return $this;
+    }
+
+    public function getPurchasedCursuses(): Collection
+    {
+        return $this->purchasedCursuses;
+    }
+    
+    public function addPurchasedCursus(Cursus $cursus): static
+    {
+        if (!$this->purchasedCursuses->contains($cursus)) {
+            $this->purchasedCursuses->add($cursus);
+        }
+    
+        return $this;
+    }
+    
+    public function removePurchasedCursus(Cursus $cursus): static
+    {
+        $this->purchasedCursuses->removeElement($cursus);
+        return $this;
+    }
+    
+    public function getPurchasedLessons(): Collection
+    {
+        return $this->purchasedLessons;
+    }
+    
+    public function addPurchasedLesson(Lesson $lesson): static
+    {
+        if (!$this->purchasedLessons->contains($lesson)) {
+            $this->purchasedLessons->add($lesson);
+        }
+    
+        return $this;
+    }
+    
+    public function removePurchasedLesson(Lesson $lesson): static
+    {
+        $this->purchasedLessons->removeElement($lesson);
         return $this;
     }
 }
