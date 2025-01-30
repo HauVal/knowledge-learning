@@ -28,7 +28,7 @@ class Cursus
     /**
      * @var Collection<int, Lesson>
      */
-    #[ORM\OneToMany(targetEntity: Lesson::class, mappedBy: 'cursus')]
+    #[ORM\OneToMany(targetEntity: Lesson::class, mappedBy: 'cursus', cascade: ['remove'])]
     private Collection $lessons;
 
     /**

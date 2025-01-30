@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer un Utilisateur{% endblock %}
+
+{% block body %}
+    <h1>{% if user.id is defined %}Modifier{% else %}Ajouter{% endif %} un Utilisateur</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('admin_users') }}">Retour</a>
+{% endblock %}

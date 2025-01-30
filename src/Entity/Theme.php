@@ -21,7 +21,8 @@ class Theme
     /**
      * @var Collection<int, Cursus>
      */
-    #[ORM\OneToMany(targetEntity: Cursus::class, mappedBy: 'theme')]
+    #[ORM\OneToMany(targetEntity: Cursus::class, mappedBy: 'theme', cascade: ['remove'])]
+
     private Collection $cursuses;
 
     public function __construct()

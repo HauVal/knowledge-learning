@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion du Contenu{% endblock %}
+
+{% block body %}
+    <h1>Gestion du Contenu</h1>
+
+    <h2>Thèmes</h2>
+    <ul>
+        {% for theme in themes %}
+            <li>
+                <strong>{{ theme.name }}</strong>
+                <a href="{{ path('admin_edit_theme', { id: theme.id }) }}">Modifier</a>
+                <form action="{{ path('admin_delete_theme', { id: theme.id }) }}" method="post" style="display:inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ theme.id) }}">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce thème ?');">
+                        Supprimer
+                    </button>
+                </form>
+                <ul>
+                    {% for cursus in theme.cursuses %}
+                        <li>
+                            <strong>{{ cursus.name }}</strong> - {{ cursus.price }}€
+                            <a href="{{ path('admin_edit_cursus', { id: cursus.id }) }}">Modifier</a>
+                            <form action="{{ path('admin_delete_cursus', { id: cursus.id }) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cursus.id) }}">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cursus ?');">
+                                    Supprimer
+                                </button>
+                            </form>
+                            <ul>
+                                {% for lesson in cursus.lessons %}
+                                    <li>
+                                        {{ lesson.name }} - {{ lesson.price }}€
+                                        <a href="{{ path('admin_edit_lesson', { id: lesson.id }) }}">Modifier</a>
+                                        <form action="{{ path('admin_delete_lesson', { id: lesson.id }) }}" method="post" style="display:inline;">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ lesson.id) }}">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette leçon ?');">
+                                                Supprimer
+                                            </button>
+                                        </form>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('admin_add_theme') }}" class="btn btn-success"> Ajouter un thème</a>
+    <a href="{{ path('admin_add_cursus') }}" class="btn btn-success"> Ajouter un cursus</a>
+    <a href="{{ path('admin_add_lesson') }}" class="btn btn-success"> Ajouter une leçon</a>
+
+    <a href="{{ path('admin_dashboard') }}">Retour</a>
+{% endblock %}
