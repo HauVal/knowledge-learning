@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,5 +37,19 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    #[Route('/certifications', name: 'app_certifications')]
+    #[AttributeIsGranted('ROLE_USER')]
+    public function certifications(): Response
+    {
+        $user = $this->getUser();
     
+        if (!$user instanceof User) {
+            throw $this->createAccessDeniedException('Utilisateur non trouvé.');
+        }
+    
+        return $this->render('profile/certifications.html.twig', [
+            'certifications' => $user->getCertifications(),
+        ]);
+    }
+
 }

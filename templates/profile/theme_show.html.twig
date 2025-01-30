@@ -14,8 +14,6 @@
                     {% if cursus not in app.user.purchasedCursuses %}
                         - {{ cursus.price }}€
                         <a href="{{ path('buy_cursus', { id: cursus.id }) }}" class="btn btn-success">Acheter</a>
-                    {% else %}
-                        <span class="text-success">Cursus débloqué !</span>
                     {% endif %}
 
                     <ul>

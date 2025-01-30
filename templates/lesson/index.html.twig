@@ -4,7 +4,12 @@
 
 {% block body %}
     <h1>{{ lesson.name }}</h1>
-    <p>Prix : {{ lesson.price }}€</p>
+
+    {% if lesson not in app.user.validatedLessons %}
+        <a href="{{ path('validate_lesson', { id: lesson.id }) }}" class="btn btn-success">Valider la leçon</a>
+    {% else %}
+        <span class="text-success">Leçon validée ✅</span>
+    {% endif %}
 
     <a href="{{ path('app_theme_show', { id: lesson.cursus.theme.id }) }}">Retour au thème</a>
 {% endblock %}

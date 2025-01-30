@@ -5,6 +5,11 @@
 {% block body %}
     <div class="container mt-5">
         <h1>Bonjour, {{ app.user.name }} !</h1>
+
+        {% if app.user %}
+            <a href="{{ path('app_certifications') }}">Mes Certifications</a>
+        {% endif %}
+        
         <p>Voici les formations disponibles :</p>
 
         <ul class="list-group">

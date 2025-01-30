@@ -14,7 +14,7 @@ class LessonController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function showLesson(Lesson $lesson): Response
     {
-        return $this->render('lesson/show.html.twig', [
+        return $this->render('lesson/index.html.twig', [
             'lesson' => $lesson,
         ]);
     }

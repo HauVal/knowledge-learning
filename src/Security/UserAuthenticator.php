@@ -63,7 +63,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         }
     
         // Rediriger l'utilisateur après connexion réussie
-        return new RedirectResponse($this->urlGenerator->generate('app_login')); // Remplace 'app_home' par la route souhaitée
+        return new RedirectResponse($this->urlGenerator->generate('app_profile'));
     }
 
     protected function getLoginUrl(Request $request): string

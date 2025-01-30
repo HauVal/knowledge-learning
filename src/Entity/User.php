@@ -46,6 +46,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $certifications;
 
     /**
+     * @var Collection<int, Lesson>
+     */
+    #[ORM\ManyToMany(targetEntity: Lesson::class)]
+    #[ORM\JoinTable(name: "user_validated_lessons")]
+    private Collection $validatedLessons;
+
+    /**
+     * @var Collection<int, Cursus>
+     */
+    #[ORM\ManyToMany(targetEntity: Cursus::class)]
+    #[ORM\JoinTable(name: "user_validated_cursuses")]
+    private Collection $validatedCursuses;
+
+    /**
      * @var Collection<int, Cursus>
      */
     #[ORM\ManyToMany(targetEntity: Cursus::class)]
@@ -65,6 +79,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->certifications = new ArrayCollection();
         $this->purchasedCursuses = new ArrayCollection();
         $this->purchasedLessons = new ArrayCollection();
+        $this->validatedLessons = new ArrayCollection();
+        $this->validatedCursuses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -239,6 +255,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removePurchasedLesson(Lesson $lesson): static
     {
         $this->purchasedLessons->removeElement($lesson);
+        return $this;
+    }
+
+    public function getValidatedLessons(): Collection
+    {
+        return $this->validatedLessons;
+    }
+    
+    public function addValidatedLesson(Lesson $lesson): static
+    {
+        if (!$this->validatedLessons->contains($lesson)) {
+            $this->validatedLessons->add($lesson);
+        }
+    
+        return $this;
+    }
+    
+    public function removeValidatedLesson(Lesson $lesson): static
+    {
+        $this->validatedLessons->removeElement($lesson);
+        return $this;
+    }
+    
+    public function getValidatedCursuses(): Collection
+    {
+        return $this->validatedCursuses;
+    }
+    
+    public function addValidatedCursus(Cursus $cursus): static
+    {
+        if (!$this->validatedCursuses->contains($cursus)) {
+            $this->validatedCursuses->add($cursus);
+        }
+    
         return $this;
     }
 }

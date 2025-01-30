@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Certifications{% endblock %}
+
+{% block body %}
+    <h1>Mes Certifications</h1>
+
+    {% if certifications is empty %}
+        <p>Aucune certification obtenue pour le moment.</p>
+    {% else %}
+        <ul>
+            {% for certification in certifications %}
+                <li>
+                    {{ certification.cursus.name }} - Obtenue le {{ certification.obtainedAt|date('d/m/Y') }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
