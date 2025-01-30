@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ theme.name }}{% endblock %}
+
+{% block body %}
+    <h1>{{ theme.name }}</h1>
+
+    <h2>Cursus disponibles</h2>
+        <ul>
+            {% for cursus in theme.cursuses %}
+                <li>
+                    <strong>{{ cursus.name }}</strong>
+
+                    {% if cursus not in app.user.purchasedCursuses %}
+                        - {{ cursus.price }}€
+                        <a href="{{ path('buy_cursus', { id: cursus.id }) }}" class="btn btn-success">Acheter</a>
+                    {% endif %}
+
+                    <ul>
+                        {% for lesson in cursus.lessons %}
+                            <li>
+                                {{ lesson.name }}
+
+                                {% if lesson not in app.user.purchasedLessons %}
+                                    - {{ lesson.price }}€
+                                    <a href="{{ path('buy_lesson', { id: lesson.id }) }}" class="btn btn-success">Acheter</a>
+                                {% else %}
+                                    <a href="{{ path('app_lesson_show', { id: lesson.id }) }}" class="btn btn-primary">Accéder à la leçon</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+
+    <a href="{{ path('app_profile') }}">Retour aux thèmes</a>
+{% endblock %}

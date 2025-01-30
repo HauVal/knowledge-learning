@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Achats{% endblock %}
+
+{% block body %}
+    <h1>Gestion des Achats</h1>
+
+    <table>
+        <tr>
+            <th>Utilisateur</th>
+            <th>Cursus achetés</th>
+            <th>Leçons achetées</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% for cursus in user.purchasedCursuses %}
+                        {{ cursus.name }}<br>
+                    {% else %}
+                        Aucun
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for lesson in user.purchasedLessons %}
+                        {{ lesson.name }}<br>
+                    {% else %}
+                        Aucun
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ path('admin_dashboard') }}">Retour</a>
+{% endblock %}
+
