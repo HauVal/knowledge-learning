@@ -4,7 +4,53 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="{{ asset('images/favicon.png') }}">
+        
         {% block stylesheets %}
+        <style>
+            body {
+                margin: 0;
+                font-family: Comic Sans MS, Comic Sans, cursive;
+            }
+            
+            header, footer{
+                padding: 20px;
+                border-width: 5px;
+                border-color: #00497c;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            header {
+                border-bottom-style: solid;
+            }
+
+            header img, footer img {
+                width: 150px;
+            }
+
+            footer {
+                border-top-style: solid;
+            }
+
+            header a{
+                text-decoration: none;
+                font-weight: 900;
+                color: #0074c7;
+                border-style: solid;
+                border-radius: 10px;
+                padding: 10px;
+            }
+
+            header a:hover {
+                cursor: pointer;
+                color: #0074c79e;
+            }
+
+            main {
+                background-color: #f1f8fc;
+            }
+        </style>
         {% endblock %}
 
         {% block javascripts %}
