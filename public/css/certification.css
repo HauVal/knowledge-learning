@@ -1,0 +1,23 @@
+main {
+    padding-bottom: 30px;
+}
+
+li, h4 {
+    margin-bottom: 30px;
+}
+
+a {
+    text-decoration: none;
+    font-weight: 900;
+    color: #0074c7;
+    border-color: #0074c7;
+    background-color: white;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.buy {
+    color: white;
+    background-color: #00497c;
+}
