@@ -21,3 +21,16 @@ a {
     color: white;
     background-color: #00497c;
 }
+
+.validation {
+    margin: 20px;
+}
+
+.lesson {
+    padding: 0 30px;
+}
+
+p {
+    text-indent: 5%;
+    text-align: justify;
+}

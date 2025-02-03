@@ -36,6 +36,10 @@
                                 {% else %}
                                     <a href="{{ path('app_lesson_show', { id: lesson.id }) }}">Accéder à la leçon</a>
                                 {% endif %}
+
+                                {% if lesson in app.user.validatedLessons %}
+                                    <span class="validation">Leçon validée ✅</span>
+                                {% endif %}
                             </li>
                         {% endfor %}
                     </ul>

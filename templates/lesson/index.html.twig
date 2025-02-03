@@ -14,13 +14,24 @@
     <main>
         <h2>{{ lesson.name }}</h2>
 
+        <div class="lesson">
+            <h3>Fusce ac consequat massa</h3>
+
+            <p>Sed vehicula quam quam, tincidunt luctus libero euismod at. Duis massa ante, 
+            suscipit sit amet sagittis vel, sollicitudin ac lorem. Vivamus ut augue ut dui convallis ullamcorper. 
+            Aenean hendrerit sagittis velit, ut imperdiet risus mattis ac. Donec maximus sem luctus sapien laoreet, 
+            id fermentum dui tincidunt. Aenean elementum nisi nisi, sit amet placerat mauris convallis ut. 
+            Vivamus lacinia mollis fermentum. Curabitur eu dolor velit. Vivamus quis maximus justo.</p>
+        </div>
+
+
         {% if lesson not in app.user.validatedLessons %}
-            <a href="{{ path('validate_lesson', { id: lesson.id }) }}" class="btn btn-success">Valider la leçon</a>
+            <a href="{{ path('validate_lesson', { id: lesson.id }) }}"class="validation">Valider la leçon</a>
         {% else %}
-            <span class="text-success">Leçon validée ✅</span>
+            <span class="validation">Leçon validée ✅</span>
         {% endif %}
 
-        <a href="{{ path('app_theme_show', { id: lesson.cursus.theme.id }) }}">Retour au thème</a>
+        <a href="{{ path('app_theme_show', { id: lesson.cursus.theme.id }) }}">Retour</a>
     </main>
 
     <footer>
