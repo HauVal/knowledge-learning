@@ -3,35 +3,53 @@
 {% block title %}Gestion des Achats{% endblock %}
 
 {% block body %}
-    <h1>Gestion des Achats</h1>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
-    <table>
-        <tr>
-            <th>Utilisateur</th>
-            <th>Cursus achetés</th>
-            <th>Leçons achetées</th>
-        </tr>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.email }}</td>
-                <td>
-                    {% for cursus in user.purchasedCursuses %}
-                        {{ cursus.name }}<br>
-                    {% else %}
-                        Aucun
-                    {% endfor %}
-                </td>
-                <td>
-                    {% for lesson in user.purchasedLessons %}
-                        {{ lesson.name }}<br>
-                    {% else %}
-                        Aucun
-                    {% endfor %}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Back-office</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
 
-    <a href="{{ path('admin_dashboard') }}">Retour</a>
+    <main>
+        <h2>Gestion des Achats</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Utilisateur</th>
+                    <th>Cursus achetés</th>
+                    <th>Leçons achetées</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% for cursus in user.purchasedCursuses %}
+                                {{ cursus.name }}<br>
+                            {% else %}
+                                Aucun
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for lesson in user.purchasedLessons %}
+                                {{ lesson.name }}<br>
+                            {% else %}
+                                Aucun
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('admin_dashboard') }}">Retour</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}
 

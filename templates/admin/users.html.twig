@@ -3,33 +3,49 @@
 {% block title %}Gestion des Utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Gestion des Utilisateurs</h1>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Email</th>
-            <th>Rôle</th>
-        </tr>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles|join(', ') }}</td>
-                <td>
-                    <a href="{{ path('admin_edit_user', { id: user.id }) }}" class="btn btn-primary">Modifier</a>
-                    <form action="{{ path('admin_delete_user', { id: user.id }) }}" method="post" style="display:inline;">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
-                            Supprimer
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    <a href="{{ path('admin_add_user') }}" class="btn btn-success"> Ajouter un utilisateur</a>
-    <a href="/admin">Retour</a>
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Back-office</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
+
+    <main>
+        <h2>Gestion des Utilisateurs</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.roles|join(', ') }}</td>
+                        <td>
+                            <a href="{{ path('admin_edit_user', { id: user.id }) }}" class="btn btn-primary">Modifier</a>
+                            <form action="{{ path('admin_delete_user', { id: user.id }) }}" method="post" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('admin_add_user') }}" class="btn btn-success"> Ajouter un utilisateur</a>
+        <a href="/admin">Retour</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

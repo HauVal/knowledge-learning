@@ -78,6 +78,7 @@ class AdminController extends AbstractController
     
         return $this->render('admin/theme_form.html.twig', [
             'form' => $form->createView(),
+            'theme' => $theme,
         ]);
     }
 
@@ -111,6 +112,7 @@ class AdminController extends AbstractController
     
         return $this->render('admin/cursus_form.html.twig', [
             'form' => $form->createView(),
+            'cursus' => $cursus,
         ]);
     }
 
@@ -144,6 +146,7 @@ class AdminController extends AbstractController
     
         return $this->render('admin/lesson_form.html.twig', [
             'form' => $form->createView(),
+            'lesson' => $lesson,
         ]);
     }
 
@@ -174,13 +177,16 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            // Vérifie si un nouveau mot de passe a été saisi
+
             $plainPassword = $form->get('password')->getData();
-    
-            if (!empty($plainPassword)) { // Vérifie que le champ n'est pas vide
+            if (!empty($plainPassword)) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
                 $user->setPassword($hashedPassword);
             }
+    
+
+            $selectedRole = $form->get('roles')->getData();
+            $user->setRoles([$selectedRole]);
     
             $entityManager->persist($user);
             $entityManager->flush();
@@ -191,6 +197,7 @@ class AdminController extends AbstractController
     
         return $this->render('admin/user_form.html.twig', [
             'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 

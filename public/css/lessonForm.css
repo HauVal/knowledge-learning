@@ -1,5 +1,11 @@
-main {
-    justify-content: center;
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-right: 10px;
 }
 
 a, button {
@@ -18,9 +24,4 @@ a:hover, button:hover {
     cursor: pointer;
     color: #0074c79e;
     border-color: #0074c79e;
-}
-
-td {
-    text-align: center;
-    padding: 20px;
 }

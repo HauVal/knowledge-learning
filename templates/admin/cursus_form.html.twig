@@ -3,12 +3,26 @@
 {% block title %}Gérer un Cursus{% endblock %}
 
 {% block body %}
-    <h1>{% if cursus.id is defined %}Modifier{% else %}Ajouter{% endif %} un Cursus</h1>
+    <link rel="stylesheet" href="{{ asset('css/lessonForm.css') }}">
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success">Enregistrer</button>
-    {{ form_end(form) }}
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Back-office</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
 
-    <a href="{{ path('admin_content') }}">Retour</a>
+    <main>
+        <h1>{% if cursus.id %}Modifier{% else %}Ajouter{% endif %} un Cursus</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">Enregistrer</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('admin_content') }}">Retour</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}
