@@ -3,12 +3,71 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset('css/registration.css') }}">
 
-    <a href="/login">Se connecter</a>
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Knowledge Learning</h1>
+        <a href="/login">CONNEXION</a>
+    </header>
 
-    <h1>Inscription</h1>
-    {{ form_start(registrationForm) }}
-        {{ form_widget(registrationForm) }}
-        <button type="submit" class="btn btn-primary">S'inscrire</button>
-    {{ form_end(registrationForm) }}
+    <main>
+        <h2>Bienvenue sur Knowlzdge Learning !</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut sollicitudin elit.</p>
+        <br>
+
+        <p>Vous êtes déjà inscrit ?</p>
+        <a href="/login">CONNEXION</a>
+        <br>
+        <br>
+
+        <p>Vous trouverez différents thèmes de formation :</p>
+
+    
+
+        <h2>Thèmes</h2>
+        <div class="themes">
+            <div class="theme">
+                <figure>
+                    <img src="{{ asset('images/musique.png') }}" alt="musique">
+                </figure>
+                <p>Musique</p>
+            </div>
+
+            <div class="theme">
+                <figure>
+                    <img src="{{ asset('images/informatique.png') }}" alt="informatique">
+                </figure>
+                <p>Informatique<p>
+            </div>
+
+            <div class="theme">
+                <figure>
+                    <img src="{{ asset('images/jardinage.png') }}" alt="jardinage">
+                </figure>
+                <p>Jardinage</p>
+            </div>
+
+            <div class="theme">
+                <figure>
+                    <img src="{{ asset('images/cuisine.png') }}" alt="cuisine">
+                </figure>
+                <p>Cuisine</p>
+            </div>
+        </div>
+
+        <p>Pour vous inscrire, utilisez le formulaire ci-desosus :</p>
+
+        <div class="register">
+            <h2>Inscription</h2>
+            {{ form_start(registrationForm) }}
+                {{ form_widget(registrationForm) }}
+                <button type="submit">S'inscrire</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

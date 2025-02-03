@@ -3,11 +3,21 @@
 {% block title %}Backoffice{% endblock %}
 
 {% block body %}
-    <h1>Tableau de bord Admin</h1>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
-    <ul>
-        <li><a href="{{ path('admin_users') }}">Gérer les utilisateurs</a></li>
-        <li><a href="{{ path('admin_content') }}">Gérer le contenu</a></li>
-        <li><a href="{{ path('admin_purchases') }}">Gérer les achats</a></li>
-    </ul>
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Back-office</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
+
+    <main>
+        <a href="{{ path('admin_users') }}">Gérer les utilisateurs</a>
+        <a href="{{ path('admin_content') }}">Gérer le contenu</a>
+        <a href="{{ path('admin_purchases') }}">Gérer les achats</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

@@ -3,12 +3,24 @@
 {% block title %}Email envoyé{% endblock %}
 
 {% block body %}
-    <div class="container text-center mt-5">
-        <h1>Email de confirmation envoyé</h1>
-        <p>
-            Merci pour votre inscription ! Un email de confirmation a été envoyé à votre adresse. 
-            Veuillez vérifier votre boîte mail (et votre dossier spam si nécessaire).
-        </p>
-        <a href="/login">se connecter</a>
-    </div>
+    <link rel="stylesheet" href="{{ asset('css/registration.css') }}">
+    
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Knowledge Learning</h1>
+        <a href="/login">CONNEXION</a>
+    </header>
+
+    <main>
+            <h2>Email de confirmation envoyé</h2>
+            <p>
+                Merci pour votre inscription ! Un email de confirmation a été envoyé à votre adresse. 
+                Veuillez vérifier votre boîte mail (et votre dossier spam si nécessaire).
+            </p>
+            <a href="/login">se connecter</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

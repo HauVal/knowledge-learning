@@ -3,18 +3,27 @@
 {% block title %}{{ theme.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ theme.name }}</h1>
+    <link rel="stylesheet" href="{{ asset('css/certification.css') }}">
 
-    <h2>Cursus disponibles</h2>
-        <ul>
-            {% for cursus in theme.cursuses %}
-                <li>
-                    <strong>{{ cursus.name }}</strong>
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Knowledge Learning</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
 
-                    {% if cursus not in app.user.purchasedCursuses %}
-                        - {{ cursus.price }}€
-                        <a href="{{ path('buy_cursus', { id: cursus.id }) }}" class="btn btn-success">Acheter</a>
-                    {% endif %}
+    <main>
+        <h2>{{ theme.name }}</h2>
+
+        <h3>Cursus disponibles</h3>
+
+                {% for cursus in theme.cursuses %}
+                    <h4>
+                        {{ cursus.name }}
+                        {% if cursus not in app.user.purchasedCursuses %}
+                            - {{ cursus.price }}€
+                            <a href="{{ path('buy_cursus', { id: cursus.id }) }}" class="buy">Acheter</a>
+                        {% endif %}
+                    </h4>
 
                     <ul>
                         {% for lesson in cursus.lessons %}
@@ -23,16 +32,24 @@
 
                                 {% if lesson not in app.user.purchasedLessons %}
                                     - {{ lesson.price }}€
-                                    <a href="{{ path('buy_lesson', { id: lesson.id }) }}" class="btn btn-success">Acheter</a>
+                                    <a href="{{ path('buy_lesson', { id: lesson.id }) }}" class="buy">Acheter</a>
                                 {% else %}
-                                    <a href="{{ path('app_lesson_show', { id: lesson.id }) }}" class="btn btn-primary">Accéder à la leçon</a>
+                                    <a href="{{ path('app_lesson_show', { id: lesson.id }) }}">Accéder à la leçon</a>
+                                {% endif %}
+
+                                {% if lesson in app.user.validatedLessons %}
+                                    <span class="validation">Leçon validée ✅</span>
                                 {% endif %}
                             </li>
                         {% endfor %}
                     </ul>
-                </li>
-            {% endfor %}
-        </ul>
+                {% endfor %}
 
-    <a href="{{ path('app_profile') }}">Retour aux thèmes</a>
+
+        <a href="{{ path('app_profile') }}">Retour</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

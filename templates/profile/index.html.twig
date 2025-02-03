@@ -3,25 +3,29 @@
 {% block title %}Mon Profil{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <h1>Bonjour, {{ app.user.name }} !</h1>
+    <link rel="stylesheet" href="{{ asset('css/profilePage.css') }}">
 
-        <a href="/logout">Me déconnecter</a>
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Knowledge Learning</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
 
-        {% if app.user %}
-            <a href="{{ path('app_certifications') }}">Mes Certifications</a>
-        {% endif %}
+    <main>
+        <h2>Bonjour, {{ app.user.name }} !</h2>
+
+        <a href="{{ path('app_certifications') }}"class="certification">Certifications obtenues</a>
 
         <p>Voici les formations disponibles :</p>
 
-        <ul class="list-group">
+        <div class="list-themes">
             {% for theme in themes %}
-                <li class="list-group-item">
-                    <a href="{{ path('app_theme_show', { id: theme.id }) }}">
-                        {{ theme.name }}
-                    </a>
-                </li>
+                <a href="{{ path('app_theme_show', { id: theme.id }) }}">{{ theme.name }}</a>
             {% endfor %}
-        </ul>
-    </div>
+        </div>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

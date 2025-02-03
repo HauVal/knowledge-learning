@@ -3,12 +3,33 @@
 {% block title %}Gérer un Thème{% endblock %}
 
 {% block body %}
-    <h1>{% if lesson.id is defined %}Modifier{% else %}Ajouter{% endif %} une Leçon</h1>
+    <link rel="stylesheet" href="{{ asset('css/lessonForm.css') }}">
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success">Enregistrer</button>
-    {{ form_end(form) }}
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Back-office</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
 
-    <a href="{{ path('admin_content') }}">Retour</a>
+    <main>
+        <h2>
+            {% if lesson.id %}
+                Modifier
+            {% else %}
+                Ajouter
+            {% endif %}
+             une Leçon
+        </h2>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">Enregistrer</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('admin_content') }}">Retour</a>
+   </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

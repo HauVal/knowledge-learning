@@ -29,14 +29,16 @@ class UserType extends AbstractType
                 'required' => false, 
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'Rôles',
+                'label' => 'Rôle :',
                 'choices' => [
                     'Utilisateur' => 'ROLE_USER',
                     'Administrateur' => 'ROLE_ADMIN',
                 ],
-                'expanded' => true,  
-                'multiple' => true, 
+                'expanded' => false,
+                'multiple' => false,
+                'mapped' => false,
             ])
+            
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => ['class' => 'btn btn-success'],

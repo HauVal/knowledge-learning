@@ -3,17 +3,33 @@
 {% block title %}Mes Certifications{% endblock %}
 
 {% block body %}
-    <h1>Mes Certifications</h1>
+    <link rel="stylesheet" href="{{ asset('css/certification.css') }}">
 
-    {% if certifications is empty %}
-        <p>Aucune certification obtenue pour le moment.</p>
-    {% else %}
-        <ul>
-            {% for certification in certifications %}
-                <li>
-                    {{ certification.cursus.name }} - Obtenue le {{ certification.obtainedAt|date('d/m/Y') }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Knowledge Learning</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
+
+    <main>
+        <h2>Mes Certifications</h2>
+
+        {% if certifications is empty %}
+            <p>Aucune certification obtenue pour le moment.</p>
+        {% else %}
+            <ul>
+                {% for certification in certifications %}
+                    <li>
+                        {{ certification.cursus.name }} - Obtenue le {{ certification.obtainedAt|date('d/m/Y') }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <a href="{{ path('app_profile') }}">Retour</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}
