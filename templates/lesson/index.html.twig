@@ -3,13 +3,27 @@
 {% block title %}{{ lesson.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ lesson.name }}</h1>
+    <link rel="stylesheet" href="{{ asset('css/certification.css') }}">
 
-    {% if lesson not in app.user.validatedLessons %}
-        <a href="{{ path('validate_lesson', { id: lesson.id }) }}" class="btn btn-success">Valider la leçon</a>
-    {% else %}
-        <span class="text-success">Leçon validée ✅</span>
-    {% endif %}
+    <header>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+            <h1>Knowledge Learning</h1>
+        <a href="/logout">DECONNEXION</a>
+    </header>
 
-    <a href="{{ path('app_theme_show', { id: lesson.cursus.theme.id }) }}">Retour au thème</a>
+    <main>
+        <h2>{{ lesson.name }}</h2>
+
+        {% if lesson not in app.user.validatedLessons %}
+            <a href="{{ path('validate_lesson', { id: lesson.id }) }}" class="btn btn-success">Valider la leçon</a>
+        {% else %}
+            <span class="text-success">Leçon validée ✅</span>
+        {% endif %}
+
+        <a href="{{ path('app_theme_show', { id: lesson.cursus.theme.id }) }}">Retour au thème</a>
+    </main>
+
+    <footer>
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
+    </footer>
 {% endblock %}

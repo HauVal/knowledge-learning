@@ -1,0 +1,24 @@
+.list-themes {
+    margin: 30px;
+}
+
+.list-themes a, .certification {
+    text-decoration: none;
+    font-weight: 900;
+    color: #0074c7;
+    border-color: #0074c7;
+    background-color: white;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.list-themes a {
+    margin-top: 30px;
+}
+
+.list-themes a:hover, .certification:hover {
+    cursor: pointer;
+    color: #0074c79e;
+    border-color: #0074c79e;
+}
