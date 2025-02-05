@@ -3,7 +3,7 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <link rel="stylesheet" href="{{ asset('css/loginPage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 
     <header>
         <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
@@ -16,7 +16,7 @@
             <h2>Connexion</h2>
 
             {% if error %}
-                <div>
+                <div class="errorMessage">
                     {{ error.messageKey|trans(error.messageData, 'security') }}
                 </div>
             {% endif %}

@@ -87,13 +87,13 @@ class PaymentController extends AbstractController
         $entityManager->flush();
     
         $this->addFlash('success', 'Paiement réussi, accès débloqué !');
-        return $this->redirectToRoute('app_profile');
+        return $this->redirectToRoute('app_theme_show', ['id' => $lesson->getCursus()->getTheme()->getId()]);
     }
 
     #[Route('/payment/cancel', name: 'payment_cancel')]
-    public function paymentCancel(): JsonResponse
+    public function paymentCancel(): Response
     {
-        return new JsonResponse(['message' => 'Paiement annulé']);
+        return $this->redirectToRoute('app_profile');
     }
 }
 

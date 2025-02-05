@@ -15,8 +15,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use App\Repository\UserRepository;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -24,7 +25,11 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator, private UserRepository $userRepository)
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private UserRepository $userRepository,
+        private UserPasswordHasherInterface $passwordHasher
+        )
     {
     }
 
@@ -37,11 +42,15 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
     
         return new Passport(
-            new UserBadge($email, function ($userIdentifier) {
+            new UserBadge($email, function ($userIdentifier) use ($password) {
                 $user = $this->userRepository->findOneBy(['email' => $userIdentifier]);
     
                 if (!$user) {
-                    throw new CustomUserMessageAuthenticationException('Email introuvable.');
+                    throw new CustomUserMessageAuthenticationException('Email incorrect.');
+                }
+
+                if (!$this->passwordHasher->isPasswordValid($user, $password)) {
+                    throw new CustomUserMessageAuthenticationException('Mot de passe incorrect.');
                 }
     
                 if (!$user->isActive()) {

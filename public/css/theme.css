@@ -6,7 +6,7 @@ li, h4 {
     margin-bottom: 30px;
 }
 
-a {
+a, button {
     text-decoration: none;
     font-weight: 900;
     color: #0074c7;
@@ -17,10 +17,20 @@ a {
     padding: 10px;
 }
 
-a:hover {
+a:hover, button:hover {
     cursor: pointer;
     color: #0074c79e;
     border-color: #0074c79e;
+}
+
+button {
+    color: white;
+    background-color: #00497c;
+}
+
+button:hover {
+    color: rgba(255, 255, 255, 0.719);
+    background-color: #00487c9f;
 }
 
 .validation {

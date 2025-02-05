@@ -3,7 +3,7 @@
 {% block title %}{{ theme.name }}{% endblock %}
 
 {% block body %}
-    <link rel="stylesheet" href="{{ asset('css/certification.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 
     <header>
         <img src="{{ asset('images/logo.jpg') }}" alt="Logo">
@@ -32,7 +32,7 @@
 
                                 {% if lesson not in app.user.purchasedLessons %}
                                     - {{ lesson.price }}€
-                                    <button class="btn btn-success" onclick="buyItem('lesson', {{ lesson.id }})">Acheter</button>
+                                    <button onclick="buyItem('lesson', {{ lesson.id }})">Acheter</button>
                                 {% else %}
                                     <a href="{{ path('app_lesson_show', { id: lesson.id }) }}">Accéder à la leçon</a>
                                 {% endif %}
