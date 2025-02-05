@@ -34,6 +34,7 @@ class ProfileController extends AbstractController
     
         return $this->render('profile/theme_show.html.twig', [
             'theme' => $theme,
+            'stripe_public_key' => $this->getParameter('stripe_public_key'),
         ]);
     }
 
