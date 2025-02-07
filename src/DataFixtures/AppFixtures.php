@@ -2,14 +2,23 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Entity\Theme;
 use App\Entity\Cursus;
 use App\Entity\Lesson;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
         // Liste des données
@@ -94,6 +103,16 @@ class AppFixtures extends Fixture
                 }
             }
         }
+
+        $user = new User();
+        $user->setEmail('test@example.com');
+        $user->setName('Test User');
+        $user->setRoles(['ROLE_USER']);
+        $user->setIsActive(true);
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
+        $user->setPassword($hashedPassword);
+        $manager->persist($user);
+        
 
         // Sauvegarder les données en base
         $manager->flush();
