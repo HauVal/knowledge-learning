@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash le mot de passe
+            // Hash the user's password
             $user->setPassword(
                 $passwordHasher->hashPassword(
                     $user,
@@ -35,19 +35,18 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // Par défaut, l'utilisateur n'est pas activé
+            // Set user as inactive by default
             $user->setIsActive(false);
 
-            // Sauvegarder l'utilisateur
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Générer un lien de confirmation
+            // Generate a confirmation link
             $confirmationUrl = $this->generateUrl('app_confirm_email', [
                 'token' => base64_encode($user->getEmail()),
             ], true);
 
-            // Envoyer un email de confirmation
+            // Send a confirmation email
             $email = (new Email())
                 ->from('no-reply@knowledge-learning.com')
                 ->to($user->getEmail())
@@ -68,6 +67,7 @@ class RegistrationController extends AbstractController
     #[Route('/confirm-email/{token}', name: 'app_confirm_email')]
     public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
     {
+        // Decode the token to get the email
         $email = base64_decode($token);
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
@@ -75,11 +75,12 @@ class RegistrationController extends AbstractController
             throw $this->createNotFoundException('Utilisateur non trouvé.');
         }
 
+        // Activate the user account
         $user->setIsActive(true);
         $entityManager->flush();
 
         $this->addFlash('success', 'Votre compte a été activé avec succès.');
-        return $this->redirectToRoute('app_login'); // Rediriger vers la connexion
+        return $this->redirectToRoute('app_login'); 
     }
 
     #[Route('/email-sent', name: 'app_email_sent')]
@@ -87,6 +88,4 @@ class RegistrationController extends AbstractController
     {
         return $this->render('registration/email_sent.html.twig');
     }
-    
 }
-

@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted as AttributeIsGranted;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    #[AttributeIsGranted('ROLE_USER')]
+    #[AttributeIsGranted('ROLE_USER')] // Restrict access to authenticated users only
     public function index(ThemeRepository $themeRepository): Response
     {
         $themes = $themeRepository->findAll();
@@ -26,7 +26,7 @@ class ProfileController extends AbstractController
     #[AttributeIsGranted('ROLE_USER')]
     public function showTheme(int $id, ThemeRepository $themeRepository): Response
     {
-        $theme = $themeRepository->find($id);
+        $theme = $themeRepository->find($id); // Retrieve the theme by ID
     
         if (!$theme) {
             throw $this->createNotFoundException('Thème non trouvé.');
@@ -34,7 +34,7 @@ class ProfileController extends AbstractController
     
         return $this->render('profile/theme_show.html.twig', [
             'theme' => $theme,
-            'stripe_public_key' => $this->getParameter('stripe_public_key'),
+            'stripe_public_key' => $this->getParameter('stripe_public_key'), // Pass Stripe public key for payments
         ]);
     }
 
@@ -52,5 +52,4 @@ class ProfileController extends AbstractController
             'certifications' => $user->getCertifications(),
         ]);
     }
-
 }

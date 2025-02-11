@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class LessonController extends AbstractController
 {
     #[Route('/lesson/{id}', name: 'app_lesson_show')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER')] // Restrict access to authenticated users only
     public function showLesson(Lesson $lesson): Response
     {
         return $this->render('lesson/index.html.twig', [
@@ -19,3 +19,4 @@ class LessonController extends AbstractController
         ]);
     }
 }
+

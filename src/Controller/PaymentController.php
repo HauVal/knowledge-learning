@@ -26,18 +26,19 @@ class PaymentController extends AbstractController
     ): JsonResponse {
         Stripe::setApiKey($this->getParameter('stripe_secret_key'));
 
-        // Récupérer l'élément (Cursus ou Lesson)
+        // Retrieve the item (either a Cursus or a Lesson) based on type
         if ($type === 'cursus') {
             $item = $entityManager->getRepository(Cursus::class)->find($id);
         } else {
             $item = $entityManager->getRepository(Lesson::class)->find($id);
         }
 
+        // Return an error if the item is not found
         if (!$item) {
             return new JsonResponse(['error' => 'Article non trouvé'], 404);
         }
 
-        // Créer la session de paiement Stripe
+        // Create a Stripe checkout session
         $checkoutSession = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -46,7 +47,7 @@ class PaymentController extends AbstractController
                     'product_data' => [
                         'name' => $item->getName(),
                     ],
-                    'unit_amount' => $item->getPrice() * 100, // Stripe attend un montant en centimes
+                    'unit_amount' => $item->getPrice() * 100, // Convert price to cents
                 ],
                 'quantity' => 1,
             ]],
@@ -65,10 +66,12 @@ class PaymentController extends AbstractController
     {
         $user = $this->getUser();
         
+        // Ensure the user is authenticated
         if (!$user instanceof User) {
             throw $this->createAccessDeniedException();
         }
     
+        // Process purchase based on type
         if ($type === 'cursus') {
             $item = $entityManager->getRepository(Cursus::class)->find($id);
             if ($item) {
@@ -96,4 +99,5 @@ class PaymentController extends AbstractController
         return $this->redirectToRoute('app_profile');
     }
 }
+
 

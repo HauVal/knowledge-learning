@@ -1,0 +1,55 @@
+Ce projet utilise PHPUnit pour assurer la qualité et la fiabilité du code.  
+Les tests couvrent plusieurs aspects de l'application, notamment :
+
+- Les fonctionnalités d'achat (PurchaseTest)
+- L'inscription et l'activation des utilisateurs (RegistrationControllerTest)
+- Les accès utilisateurs et administrateurs (AdminAccessTest)
+- La connexion et l'authentification (LoginTest)
+- La gestion des utilisateurs en base de données (UserRepositoryTest)
+
+Les tests permettent de s'assurer que les fonctionnalités essentielles fonctionnent correctement après chaque modification.
+
+
+I) Installation et configuration
+Avant de commencer, vérifiez si PHPUnit est déjà installé avec la commande :
+
+```bash
+php bin/phpunit --version
+
+Si PHPUnit n'est pas installé, utilisez la commande suivante :
+composer require --dev symfony/phpunit-bridge
+
+II) Exécution des tests
+Pour exécuter les tests, lancez la cammande :
+php bin/phpunit
+
+Pour exécuter un test spécifique :
+php bin/phpunit tests/nom_du_dossier/nom_du_test
+
+par exemple pour LoginTest.php:
+php bin/phpunit tests/Security/LoginTest.php
+
+Ensuite pour executé les tests d'un dossier spécifique, par exemple pour Security :
+php bin/phpunit --testsuite=Security
+
+
+III)Description des tests :
+	1. Achat de Cursus et de Leçon (PurchaseTest.php)
+		Vérifie qu'un utilisateur peut acheter un cursus et une leçon.
+		Vérifie la redirection après l'achat.
+
+	2. Inscription et Activation (RegistrationControllerTest.php)
+		Teste l'inscription d'un utilisateur.
+		Vérifie l'envoi de l'email de confirmation.
+		Vérifie l'activation du compte après validation de l'email.
+
+	3. Sécurité et Authentification
+		a) Accès administrateur (AdminAccessTest.php)
+			Vérifie qu'un utilisateur non connecté ne peut pas accéder au back-office.
+			Vérifie qu'un administrateur peut accéder au back-office.
+		b) Connexion utilisateur (LoginTest.php)
+			Teste la connexion avec les bonnes informations.
+			Vérifie qu’un mauvais mot de passe affiche un message d’erreur.
+
+	4. Gestion des Utilisateurs (UserRepositoryTest.php)
+		Vérifie qu'un utilisateur peut être récupéré par son email.

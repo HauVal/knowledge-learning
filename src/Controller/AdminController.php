@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\UserRepository;
 use App\Repository\ThemeRepository;
-use App\Repository\PurchaseRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -178,13 +177,13 @@ class AdminController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Hash the password if a new one is provided
             $plainPassword = $form->get('password')->getData();
             if (!empty($plainPassword)) {
                 $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
                 $user->setPassword($hashedPassword);
             }
     
-
             $selectedRole = $form->get('roles')->getData();
             $user->setRoles([$selectedRole]);
     
@@ -210,5 +209,4 @@ class AdminController extends AbstractController
         $this->addFlash('success', 'Utilisateur supprimé avec succès !');
         return $this->redirectToRoute('admin_users');
     }
-    
 }

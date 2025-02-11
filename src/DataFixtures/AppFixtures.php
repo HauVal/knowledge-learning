@@ -21,7 +21,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Liste des données
         $themesData = [
             'Musique' => [
                 [
@@ -81,7 +80,6 @@ class AppFixtures extends Fixture
             ],
         ];
 
-        // Parcourir les thèmes et insérer en base
         foreach ($themesData as $themeName => $cursusList) {
             $theme = new Theme();
             $theme->setName($themeName);
@@ -105,16 +103,15 @@ class AppFixtures extends Fixture
         }
 
         $user = new User();
-        $user->setEmail('test@example.com');
-        $user->setName('Test User');
-        $user->setRoles(['ROLE_USER']);
+        $user->setEmail('knowledge@gmail.com');
+        $user->setName('Knowledge');
+        $user->setRoles(['ROLE_ADMIN']);
         $user->setIsActive(true);
-        $hashedPassword = $this->passwordHasher->hashPassword($user, 'password123');
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'knowledge2025');
         $user->setPassword($hashedPassword);
         $manager->persist($user);
         
 
-        // Sauvegarder les données en base
         $manager->flush();
     }
 }

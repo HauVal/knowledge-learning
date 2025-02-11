@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class PurchaseController extends AbstractController
 {
     #[Route('/buy/cursus/{id}', name: 'buy_cursus')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER')] // Restrict access to authenticated users only
     public function buyCursus(Cursus $cursus, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -23,11 +23,11 @@ class PurchaseController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        // Vérifier si l'utilisateur possède déjà ce cursus
+        // Check if the user already owns this Cursus
         if (!$user->getPurchasedCursuses()->contains($cursus)) {
             $user->addPurchasedCursus($cursus);
 
-            // Débloquer toutes les leçons du cursus
+            // Unlock all lessons of the Cursus
             foreach ($cursus->getLessons() as $lesson) {
                 $user->addPurchasedLesson($lesson);
             }
@@ -49,7 +49,7 @@ class PurchaseController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        // Vérifier si l'utilisateur possède déjà cette leçon
+        // Check if the user already owns this Lesson
         if (!$user->getPurchasedLessons()->contains($lesson)) {
             $user->addPurchasedLesson($lesson);
             $entityManager->flush();
@@ -59,4 +59,3 @@ class PurchaseController extends AbstractController
         return $this->redirectToRoute('app_theme_show', ['id' => $lesson->getCursus()->getTheme()->getId()]);
     }
 }
-
