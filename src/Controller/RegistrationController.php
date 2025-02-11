@@ -13,8 +13,24 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Controller responsible for user registration and email confirmation.
+ */
 class RegistrationController extends AbstractController
 {
+    /**
+     * Handles user registration.
+     *
+     * This method displays the registration form and processes the submitted data.
+     * If the form is valid, it hashes the user's password, sets the user as inactive,
+     * saves the user in the database, generates a confirmation link, and sends a confirmation email.
+     *
+     * @param Request $request The HTTP request object.
+     * @param UserPasswordHasherInterface $passwordHasher The password hasher service.
+     * @param EntityManagerInterface $entityManager The entity manager for database operations.
+     * @param MailerInterface $mailer The mailer service for sending confirmation emails.
+     * @return Response The rendered registration form or a redirection after form submission.
+     */
     #[Route('/', name: 'app_register')]
     public function register(
         Request $request,
@@ -64,6 +80,16 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    /**
+     * Confirms a user's email address.
+     *
+     * This method retrieves the user by decoding the email token, activates their account,
+     * and redirects them to the login page.
+     *
+     * @param string $token The base64-encoded email token.
+     * @param EntityManagerInterface $entityManager The entity manager for database operations.
+     * @return Response A redirection to the login page after activation.
+     */
     #[Route('/confirm-email/{token}', name: 'app_confirm_email')]
     public function confirmEmail(string $token, EntityManagerInterface $entityManager): Response
     {
@@ -83,9 +109,17 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_login'); 
     }
 
+    /**
+     * Displays a page confirming that a confirmation email has been sent.
+     *
+     * This page informs users that they need to check their email for a confirmation link.
+     *
+     * @return Response The rendered confirmation page.
+     */
     #[Route('/email-sent', name: 'app_email_sent')]
     public function emailSent(): Response
     {
         return $this->render('registration/email_sent.html.twig');
     }
 }
+

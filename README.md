@@ -63,5 +63,7 @@ Un utilisateur administrateur sera accessible avec les identifiants suivant pour
 
 Pour accéder aux autres parties, il faut ce créer un compte en suivant le formulaire d'inscription sur la page d'accueil.
 
+Pour acheter un cursus ou une leçon, il faut entrer le numéro de code : 4242 4242 4242 4242
+Ensuite vous pouvez entrer n'importe quels informations.
 
 	

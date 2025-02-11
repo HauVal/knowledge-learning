@@ -15,8 +15,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Controller handling payment operations via Stripe.
+ */
 class PaymentController extends AbstractController
 {
+    /**
+     * Creates a Stripe checkout session for purchasing a cursus or a lesson.
+     * 
+     * @param string $type The type of item to purchase ('cursus' or 'lesson').
+     * @param int $id The ID of the item to purchase.
+     * @param EntityManagerInterface $entityManager The entity manager to fetch item data.
+     * @param UrlGeneratorInterface $urlGenerator The URL generator for success and cancel URLs.
+     * 
+     * @return JsonResponse Returns the Stripe checkout session ID.
+     */
     #[Route('/create-checkout-session/{type}/{id}', name: 'create_checkout_session')]
     public function checkoutSession(
         string $type,
@@ -27,15 +40,13 @@ class PaymentController extends AbstractController
         Stripe::setApiKey($this->getParameter('stripe_secret_key'));
 
         // Retrieve the item (either a Cursus or a Lesson) based on type
-        if ($type === 'cursus') {
-            $item = $entityManager->getRepository(Cursus::class)->find($id);
-        } else {
-            $item = $entityManager->getRepository(Lesson::class)->find($id);
-        }
+        $item = ($type === 'cursus')
+            ? $entityManager->getRepository(Cursus::class)->find($id)
+            : $entityManager->getRepository(Lesson::class)->find($id);
 
         // Return an error if the item is not found
         if (!$item) {
-            return new JsonResponse(['error' => 'Article non trouvé'], 404);
+            return new JsonResponse(['error' => 'Item not found'], 404);
         }
 
         // Create a Stripe checkout session
@@ -61,6 +72,15 @@ class PaymentController extends AbstractController
         return new JsonResponse(['id' => $checkoutSession->id]);
     }
 
+    /**
+     * Handles successful payment, granting access to the purchased cursus or lesson.
+     * 
+     * @param string $type The type of item purchased ('cursus' or 'lesson').
+     * @param int $id The ID of the purchased item.
+     * @param EntityManagerInterface $entityManager The entity manager to update user purchases.
+     * 
+     * @return Response Redirects to the theme page after granting access.
+     */
     #[Route('/payment/success/{type}/{id}', name: 'payment_success')]
     public function paymentSuccess(string $type, int $id, EntityManagerInterface $entityManager): Response
     {
@@ -89,15 +109,21 @@ class PaymentController extends AbstractController
     
         $entityManager->flush();
     
-        $this->addFlash('success', 'Paiement réussi, accès débloqué !');
-        return $this->redirectToRoute('app_theme_show', ['id' => $lesson->getCursus()->getTheme()->getId()]);
+        $this->addFlash('success', 'Payment successful, access granted!');
+        return $this->redirectToRoute('app_theme_show', [
+            'id' => $type === 'cursus' ? $item->getTheme()->getId() : $item->getCursus()->getTheme()->getId()
+        ]);
+        
     }
 
+    /**
+     * Handles payment cancellation and redirects the user.
+     * 
+     * @return Response Redirects the user back to their profile.
+     */
     #[Route('/payment/cancel', name: 'payment_cancel')]
     public function paymentCancel(): Response
     {
         return $this->redirectToRoute('app_profile');
     }
 }
-
-

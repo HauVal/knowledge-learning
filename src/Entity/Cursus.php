@@ -15,40 +15,45 @@ class Cursus
     #[ORM\Column]
     private ?int $id = null;
 
-    // Name of the cursus
+    /** @var string|null Name of the cursus */
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    // Price of the cursus
+    /** @var float|null Price of the cursus */
     #[ORM\Column]
     private ?float $price = null;
 
-    // The theme to which this cursus belongs
+    /** 
+     * @var Theme|null The theme to which this cursus belongs 
+     */
     #[ORM\ManyToOne(targetEntity: Theme::class, inversedBy: "cursus")]
     #[ORM\JoinColumn(nullable: false)]
     private $theme;
 
     /**
-     * @var Collection<int, Lesson>
+     * @var Collection<int, Lesson> 
      * Lessons associated with this cursus
      */
     #[ORM\OneToMany(targetEntity: Lesson::class, mappedBy: 'cursus', cascade: ['remove'])]
     private Collection $lessons;
 
     /**
-     * @var Collection<int, Purchase>
+     * @var Collection<int, Purchase> 
      * Purchases related to this cursus
      */
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'cursus')]
     private Collection $purchases;
 
     /**
-     * @var Collection<int, Certification>
+     * @var Collection<int, Certification> 
      * Certifications obtained through this cursus
      */
     #[ORM\OneToMany(targetEntity: Certification::class, mappedBy: 'cursus')]
     private Collection $certifications;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->lessons = new ArrayCollection();
@@ -56,19 +61,32 @@ class Cursus
         $this->certifications = new ArrayCollection();
     }
 
-    // Get the ID of the cursus
+    /**
+     * Get the ID of the cursus
+     * 
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    // Get the name of the cursus
+    /**
+     * Get the name of the cursus
+     * 
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    // Set the name of the cursus
+    /**
+     * Set the name of the cursus
+     * 
+     * @param string $name
+     * @return static
+     */
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -76,13 +94,22 @@ class Cursus
         return $this;
     }
 
-    // Get the price of the cursus
+    /**
+     * Get the price of the cursus
+     * 
+     * @return float|null
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    // Set the price of the cursus
+    /**
+     * Set the price of the cursus
+     * 
+     * @param float $price
+     * @return static
+     */
     public function setPrice(float $price): static
     {
         $this->price = $price;
@@ -90,13 +117,22 @@ class Cursus
         return $this;
     }
 
-    // Get the associated theme
+    /**
+     * Get the associated theme
+     * 
+     * @return Theme|null
+     */
     public function getTheme(): ?Theme
     {
         return $this->theme;
     }
 
-    // Set the associated theme
+    /**
+     * Set the associated theme
+     * 
+     * @param Theme|null $theme
+     * @return static
+     */
     public function setTheme(?Theme $theme): static
     {
         $this->theme = $theme;
@@ -106,6 +142,7 @@ class Cursus
 
     /**
      * Get all lessons of the cursus
+     * 
      * @return Collection<int, Lesson>
      */
     public function getLessons(): Collection
@@ -113,7 +150,12 @@ class Cursus
         return $this->lessons;
     }
 
-    // Add a lesson to the cursus
+    /**
+     * Add a lesson to the cursus
+     * 
+     * @param Lesson $lesson
+     * @return static
+     */
     public function addLesson(Lesson $lesson): static
     {
         if (!$this->lessons->contains($lesson)) {
@@ -124,11 +166,15 @@ class Cursus
         return $this;
     }
 
-    // Remove a lesson from the cursus
+    /**
+     * Remove a lesson from the cursus
+     * 
+     * @param Lesson $lesson
+     * @return static
+     */
     public function removeLesson(Lesson $lesson): static
     {
         if ($this->lessons->removeElement($lesson)) {
-            // Set the owning side to null (unless already changed)
             if ($lesson->getCursus() === $this) {
                 $lesson->setCursus(null);
             }
@@ -139,6 +185,7 @@ class Cursus
 
     /**
      * Get all purchases of this cursus
+     * 
      * @return Collection<int, Purchase>
      */
     public function getPurchases(): Collection
@@ -146,7 +193,12 @@ class Cursus
         return $this->purchases;
     }
 
-    // Add a purchase to the cursus
+    /**
+     * Add a purchase to the cursus
+     * 
+     * @param Purchase $purchase
+     * @return static
+     */
     public function addPurchase(Purchase $purchase): static
     {
         if (!$this->purchases->contains($purchase)) {
@@ -157,11 +209,15 @@ class Cursus
         return $this;
     }
 
-    // Remove a purchase from the cursus
+    /**
+     * Remove a purchase from the cursus
+     * 
+     * @param Purchase $purchase
+     * @return static
+     */
     public function removePurchase(Purchase $purchase): static
     {
         if ($this->purchases->removeElement($purchase)) {
-            // Set the owning side to null (unless already changed)
             if ($purchase->getCursus() === $this) {
                 $purchase->setCursus(null);
             }
@@ -172,6 +228,7 @@ class Cursus
 
     /**
      * Get all certifications related to this cursus
+     * 
      * @return Collection<int, Certification>
      */
     public function getCertifications(): Collection
@@ -179,7 +236,12 @@ class Cursus
         return $this->certifications;
     }
 
-    // Add a certification to the cursus
+    /**
+     * Add a certification to the cursus
+     * 
+     * @param Certification $certification
+     * @return static
+     */
     public function addCertification(Certification $certification): static
     {
         if (!$this->certifications->contains($certification)) {
@@ -190,11 +252,15 @@ class Cursus
         return $this;
     }
 
-    // Remove a certification from the cursus
+    /**
+     * Remove a certification from the cursus
+     * 
+     * @param Certification $certification
+     * @return static
+     */
     public function removeCertification(Certification $certification): static
     {
         if ($this->certifications->removeElement($certification)) {
-            // Set the owning side to null (unless already changed)
             if ($certification->getCursus() === $this) {
                 $certification->setCursus(null);
             }

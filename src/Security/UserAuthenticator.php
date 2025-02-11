@@ -18,12 +18,23 @@ use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Handles user authentication using Symfony Security.
+ */
 class UserAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
+    /** @var string The login route name */
     public const LOGIN_ROUTE = 'app_login';
 
+    /**
+     * Constructor.
+     *
+     * @param UrlGeneratorInterface $urlGenerator Used to generate route URLs
+     * @param UserRepository $userRepository Repository to fetch user data
+     * @param UserPasswordHasherInterface $passwordHasher Password hasher service
+     */
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         private UserRepository $userRepository,
@@ -31,6 +42,13 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
     ) {
     }
 
+    /**
+     * Authenticates the user.
+     *
+     * @param Request $request The HTTP request containing login credentials
+     *
+     * @return Passport The authentication passport
+     */
     public function authenticate(Request $request): Passport
     {
         // Retrieve email, password, and CSRF token from the login form
@@ -70,6 +88,15 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
+    /**
+     * Handles successful authentication.
+     *
+     * @param Request $request The HTTP request
+     * @param TokenInterface $token The authentication token
+     * @param string $firewallName The firewall name
+     *
+     * @return Response|null The response after authentication success
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         // Get the authenticated user
@@ -84,10 +111,16 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         return new RedirectResponse($this->urlGenerator->generate('app_profile')); 
     }
 
+    /**
+     * Returns the login URL.
+     *
+     * @param Request $request The HTTP request
+     *
+     * @return string The login route URL
+     */
     protected function getLoginUrl(Request $request): string
     {
         // Return the login page URL
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
-

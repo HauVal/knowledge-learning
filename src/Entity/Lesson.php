@@ -16,21 +16,26 @@ class Lesson
     #[ORM\Column]
     private ?int $id = null;
 
-    // The name of the lesson
+    /** 
+     * @var string|null The name of the lesson 
+     */
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    // The price of the lesson
+    /** 
+     * @var float|null The price of the lesson 
+     */
     #[ORM\Column]
     private ?float $price = null;
 
-    // The cursus to which this lesson belongs
+    /** 
+     * @var Cursus|null The cursus to which this lesson belongs 
+     */
     #[ORM\ManyToOne(inversedBy: 'lessons')]
     private ?Cursus $cursus = null;
 
     /**
-     * @var Collection<int, Purchase>
-     * Collection of purchases related to this lesson
+     * @var Collection<int, Purchase> Collection of purchases related to this lesson
      */
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'lesson')]
     private Collection $purchases;
@@ -40,19 +45,32 @@ class Lesson
         $this->purchases = new ArrayCollection();
     }
 
-    // Get the lesson ID
+    /**
+     * Get the lesson ID
+     * 
+     * @return int|null The lesson ID
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    // Get the lesson name
+    /**
+     * Get the lesson name
+     * 
+     * @return string|null The lesson name
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    // Set the lesson name
+    /**
+     * Set the lesson name
+     * 
+     * @param string $name The lesson name
+     * @return static
+     */
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -60,13 +78,22 @@ class Lesson
         return $this;
     }
 
-    // Get the lesson price
+    /**
+     * Get the lesson price
+     * 
+     * @return float|null The lesson price
+     */
     public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    // Set the lesson price
+    /**
+     * Set the lesson price
+     * 
+     * @param float $price The lesson price
+     * @return static
+     */
     public function setPrice(float $price): static
     {
         $this->price = $price;
@@ -74,13 +101,22 @@ class Lesson
         return $this;
     }
 
-    // Get the associated cursus
+    /**
+     * Get the associated cursus
+     * 
+     * @return Cursus|null The associated cursus
+     */
     public function getCursus(): ?Cursus
     {
         return $this->cursus;
     }
 
-    // Set the associated cursus
+    /**
+     * Set the associated cursus
+     * 
+     * @param Cursus|null $cursus The cursus entity
+     * @return static
+     */
     public function setCursus(?Cursus $cursus): static
     {
         $this->cursus = $cursus;
@@ -90,6 +126,7 @@ class Lesson
 
     /**
      * Get all purchases related to this lesson
+     * 
      * @return Collection<int, Purchase>
      */
     public function getPurchases(): Collection
@@ -97,7 +134,12 @@ class Lesson
         return $this->purchases;
     }
 
-    // Add a purchase to the lesson
+    /**
+     * Add a purchase to the lesson
+     * 
+     * @param Purchase $purchase The purchase entity
+     * @return static
+     */
     public function addPurchase(Purchase $purchase): static
     {
         if (!$this->purchases->contains($purchase)) {
@@ -108,7 +150,12 @@ class Lesson
         return $this;
     }
 
-    // Remove a purchase from the lesson
+    /**
+     * Remove a purchase from the lesson
+     * 
+     * @param Purchase $purchase The purchase entity
+     * @return static
+     */
     public function removePurchase(Purchase $purchase): static
     {
         if ($this->purchases->removeElement($purchase)) {

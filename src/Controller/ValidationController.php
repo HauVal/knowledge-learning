@@ -10,8 +10,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+/**
+ * Handles lesson validation and certification assignment.
+ */
 class ValidationController extends AbstractController
 {
+    /**
+     * Validates a lesson for the authenticated user. 
+     * If all lessons of the related cursus are validated, 
+     * the cursus is also validated and a certification is granted.
+     *
+     * @param Lesson $lesson The lesson to validate.
+     * @param EntityManagerInterface $entityManager The entity manager.
+     * @return Response Redirects to the lesson page after validation.
+     *
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException If the user is not authenticated.
+     */
     #[Route('/validate/lesson/{id}', name: 'validate_lesson')]
     #[IsGranted('ROLE_USER')]
     public function validateLesson(Lesson $lesson, EntityManagerInterface $entityManager): Response
