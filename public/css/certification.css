@@ -23,16 +23,6 @@ a:hover {
     border-color: #0074c79e;
 }
 
-.buy {
-    color: white;
-    background-color: #00497c;
-}
-
-.buy:hover {
-    color: rgba(255, 255, 255, 0.719);
-    background-color: #00487c9f;
-}
-
 .validation {
     margin: 20px;
 }

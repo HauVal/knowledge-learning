@@ -11,8 +11,20 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+/**
+ * Class RegistrationFormType
+ *
+ * This form is used for user registration. It includes fields for 
+ * name, email, and password with validation rules.
+ */
 class RegistrationFormType extends AbstractType
 {
+    /**
+     * Builds the user registration form.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array $options The form options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -31,6 +43,11 @@ class RegistrationFormType extends AbstractType
         ]);
     }
 
+    /**
+     * Configures the options for this form type.
+     *
+     * @param OptionsResolver $resolver The options resolver
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -38,3 +55,4 @@ class RegistrationFormType extends AbstractType
         ]);
     }
 }
+

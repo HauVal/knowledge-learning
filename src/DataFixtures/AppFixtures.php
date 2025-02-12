@@ -2,17 +2,25 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Entity\Theme;
 use App\Entity\Cursus;
 use App\Entity\Lesson;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        // Liste des données
         $themesData = [
             'Musique' => [
                 [
@@ -72,7 +80,6 @@ class AppFixtures extends Fixture
             ],
         ];
 
-        // Parcourir les thèmes et insérer en base
         foreach ($themesData as $themeName => $cursusList) {
             $theme = new Theme();
             $theme->setName($themeName);
@@ -95,7 +102,16 @@ class AppFixtures extends Fixture
             }
         }
 
-        // Sauvegarder les données en base
+        $user = new User();
+        $user->setEmail('knowledge@gmail.com');
+        $user->setName('Knowledge');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setIsActive(true);
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'knowledge2025');
+        $user->setPassword($hashedPassword);
+        $manager->persist($user);
+        
+
         $manager->flush();
     }
 }
