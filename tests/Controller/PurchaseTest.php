@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use App\Entity\User;
 use App\Entity\Cursus;
 use App\Entity\Lesson;
-use Doctrine\ORM\EntityManagerInterface;
 
 class PurchaseTest extends WebTestCase
 {

@@ -2,8 +2,8 @@ Knowledge Learning
 
 I)Introduction
 
-	"Knowledge Learning" est une plateforme e-learning et e-commerce développée pour la société **Knowledge**.  
-Elle permet aux utilisateurs d’acheter des **cursus** et des **leçons** pour apprendre en autonomie.  
+	"Knowledge Learning" est une plateforme e-learning et e-commerce développée pour la société "Knowledge".  
+Elle permet aux utilisateurs d’acheter des cursus et des leçons pour apprendre en autonomie.  
 
 	1) Objectif du projet
 L’objectif est de proposer un espace en ligne où les utilisateurs peuvent :  
@@ -13,15 +13,14 @@ alider leurs leçons et obtenir une certification
 Gérer les contenus et utilisateurs via un backoffice (pour les administrateurs)
 
 	2) Technologies utilisées
-- **Symfony 7** (Framework PHP)  
-- **MySQL** (Base de données)  
-- **Twig** (Moteur de template)  
-- **Doctrine** (ORM pour la gestion des entités)  
-- **Stripe** (Paiement en ligne)  
-- **Mailtrap / SMTP** (Envoi d’e-mails pour l’activation de compte)  
-- **Bootstrap** (Interface utilisateur)  
-- **PHPUnit** (Tests unitaires)  
-
+- Symfony 7 (Framework PHP)  
+- "XAMPP"(Pour "Apache" et "MySQL" (Serveur et Base de données)  
+- "Twig" (Moteur de template)  
+- "Doctrine" (ORM pour la gestion des entités)  
+- "Stripe" (Paiement en ligne)  
+- "Mailtrap / SMTP" (Envoi d’e-mails pour l’activation de compte)  
+- "Bootstrap" (Interface utilisateur)  
+- "PHPUnit" (Tests unitaires)  
 
 II) Pré-requis et Installation
 
@@ -29,13 +28,16 @@ II) Pré-requis et Installation
 
 Avant d'installer le projet, assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
-- **PHP 8.2+**  
-- **Composer**  
-- **Symfony CLI** (optionnel mais recommandé)  
-- **MySQL 8+**  
-- **Node.js & npm** (pour gérer les assets si nécessaire)  
+- "PHP 8.2+"  
+- "Composer"  
+- "Symfony CLI" (optionnel mais recommandé)  
+- "MySQL 8+"  
+- "Node.js & npm" (pour gérer les assets si nécessaire)  
+-
 
 	2) Installation
+
+Ouvrir XAMPP et lancer Apache et MySQL.
 
 Installer les dépendances PHP avec Composer :
 composer install
